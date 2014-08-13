@@ -17,6 +17,11 @@ Grab and install the **Inconsolata-dz** patched font for Powerline:
 
 <https://gist.github.com/1595572>
 
+Install bundle requirements
+
+	cd ~/.vim/bundle/ctrlp-cmatcher/
+	./install.sh
+
 ## What's packed in this:
 
 ### Package Manager
