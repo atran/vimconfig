@@ -38,6 +38,7 @@ Bundle 'mhinz/vim-signify'
 Bundle 'mhinz/vim-hugefile'
 Bundle 'myusuf3/numbers.vim'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'godlygeek/tabular'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                          Syntax configuration                           "
@@ -129,12 +130,6 @@ set wildignore+=.git/*,.hg/*,.svn/*,*/swp/*,*/undo/*,Gemfile.lock
 set wildmenu                                 "show completion matches above command line
 set encoding=utf-8
 scriptencoding utf-8
-
-" Don't move around in insert mode
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
 
 " The alt (option) key on macs now behaves like the 'meta' key. This means we
 " can now use <m-x> or similar as maps. This is buffer local, and it can easily
@@ -248,15 +243,14 @@ nnoremap <leader>f :Ack
 "                              Ctrl P                                     "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_map = '<leader>p'
-let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:15,results:15'
 let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 let g:ctrlp_switch_buffer = '0'
 let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                             Sparkup                                     "
+"                              Easymotion                                 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:sparkupExecuteMapping = '<leader>e'
+nmap <leader>e <leader><leader>w
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                             Syntastic                                   "
@@ -284,3 +278,9 @@ let g:signify_sign_overwrite     = 1
 highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=159
 highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                             Tabularize                                  "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <Leader>t :Tabularize /
+vmap <Leader>t :Tabularize /

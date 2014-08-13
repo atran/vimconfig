@@ -13,10 +13,6 @@ use Vundle to install the Bundles.
 
 		vim +BundleInstall! +BundleClean +q
 
-copy base16 colors
-
-    cp ~/.vim/bundle/base16-vim/colors/* ~/.vim/colors
-
 Grab and install the **Inconsolata-dz** patched font for Powerline:
 
 <https://gist.github.com/1595572>
@@ -29,19 +25,18 @@ Grab and install the **Inconsolata-dz** patched font for Powerline:
 Vundle, the plug-in manager for Vim
 
 
-Name	     |  Desc                                       | Bindings
------------- | ------------------------------------------- | ------------
-[ctrlp](https://github.com/kien/ctrlp.vim) | Fuzzy file, buffer, mru and tag finder | `,f`
-[airline](https://github.com/bling/vim-airline) | lean & mean status/tabline for vim that's light as air |
-[bufexplorer](https://github.com/c9s/bufexplorer) | With bufexplorer, you can quickly and easily switch between buffers. | `,be`
-[ack](https://github.com/mileszs/ack.vim) | Vim plugin for the Perl module / CLI script | `,a`
-[fugitive](https://github.com/tpope/vim-fugitive) | fugitive.vim: a Git wrapper so awesome, it should be illegal
-[syntastic](https://github.com/scrooloose/syntastic) | Syntax checking hacks for vim
-[vim-git](https://github.com/tpope/vim-git) | Vim Git runtime files
-[ctrlp](https://github.com/kien/ctrlp.vim) | Fuzzy file, buffer, mru and tag finder | `,f`
-[sparkup](https://github.com/rstacruz/sparkup) | A parser for a condensed HTML format. | `,e`
-[nerdcommenter](https://github.com/scrooloose/nerdcommenter) | The premier commenting tool. | `c<space>`
-[supertab](https://github.com/ervandew/supertab) | Perform all your vim insert mode completions with Tab. | `<tab>`
+Name                                                         | Desc                                                         | Bindings
+------------                                                 | -------------------------------------------                  | ------------
+[ctrlp](https://github.com/kien/ctrlp.vim)                   | Fuzzy file, buffer, mru and tag finder                       | `,p`
+[ack](https://github.com/mileszs/ack.vim)                    | Vim plugin for the Perl module / CLI script                  | `,f`
+[fugitive](https://github.com/tpope/vim-fugitive)            | fugitive.vim: a Git wrapper so awesome, it should be illegal | `:G<command>`
+[ctrlp](https://github.com/kien/ctrlp.vim)                   | Fuzzy file, buffer, mru and tag finder                       | `,p`
+[sparkup](https://github.com/rstacruz/sparkup)               | A parser for a condensed HTML format.                        | `<C-e>`
+[nerdcommenter](https://github.com/scrooloose/nerdcommenter) | The premier commenting tool.                                 | `,cc / ,cu`
+[vim-easymotion](https://github.com/Lokaltog/vim-easymotion) | Easymotion provides a much simpler way to use motion in Vim  | `,e`
+[tabular](https://github.com/godlygeek/tabular)              | Text filtering and alignment                                 | `,t`
+[vim-surround](https://github.com/tpope/vim-surround)        | Quoting/parenthesizing made simple                           | `S`
+
 
 ## Screenshot
 
