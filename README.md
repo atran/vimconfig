@@ -30,7 +30,6 @@ Name                                                         | Desc             
 [ctrlp](https://github.com/kien/ctrlp.vim)                   | Fuzzy file, buffer, mru and tag finder                       | `,p`
 [ack](https://github.com/mileszs/ack.vim)                    | Vim plugin for the Perl module / CLI script                  | `,f`
 [fugitive](https://github.com/tpope/vim-fugitive)            | fugitive.vim: a Git wrapper so awesome, it should be illegal | `:G<command>`
-[ctrlp](https://github.com/kien/ctrlp.vim)                   | Fuzzy file, buffer, mru and tag finder                       | `,p`
 [sparkup](https://github.com/rstacruz/sparkup)               | A parser for a condensed HTML format.                        | `<C-e>`
 [nerdcommenter](https://github.com/scrooloose/nerdcommenter) | The premier commenting tool.                                 | `,cc / ,cu`
 [vim-easymotion](https://github.com/Lokaltog/vim-easymotion) | Easymotion provides a much simpler way to use motion in Vim  | `,e`
