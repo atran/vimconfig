@@ -50,6 +50,7 @@ Bundle 'digitaltoad/vim-jade'
 Bundle 'wavded/vim-stylus'
 Bundle 'slim-template/vim-slim.git'
 Bundle 'groenewege/vim-less'
+Bundle 'mustache/vim-mustache-handlebars'
 Bundle 'ap/vim-css-color'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
