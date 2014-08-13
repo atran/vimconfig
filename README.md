@@ -9,10 +9,13 @@ Link the .vimrc file
 
 		ln -s ~/.vim/.vimrc ~/.vimrc
 
-
 use Vundle to install the Bundles.
 
 		vim +BundleInstall! +BundleClean +q
+
+copy base16 colors
+
+    cp ~/.vim/bundle/base16-vim/colors/* ~/.vim/colors
 
 Grab and install the **Inconsolata-dz** patched font for Powerline:
 

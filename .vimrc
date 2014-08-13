@@ -1,6 +1,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 General                                 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set shell=bash
 
 set nocompatible
 
@@ -8,7 +9,12 @@ set nocompatible
 filetype off
 
 " Setup vundle
-set rtp+=~/.dotfiles/vim/bundle/vundle/
+if (!isdirectory(expand("$HOME/.vim/bundle/vundle")))
+    call system(expand("mkdir -p $HOME/.vim/bundle"))
+    call system(expand("git clone git@github.com:gmarik/vundle $HOME/.vim/bundle/vundle"))
+    echoerr 'Vundle was freshly installed. You should run :BundleInstall'
+endif
+set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -17,25 +23,33 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 Bundle 'mileszs/ack.vim'
-Bundle 'ervandew/supertab'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'kien/ctrlp.vim'
 Bundle 'JazzCore/ctrlp-cmatcher'
-Bundle 'c9s/bufexplorer'
 Bundle 'rstacruz/sparkup.git', {'rtp': 'vim/'}
 Bundle 'scrooloose/nerdcommenter.git'
 Bundle 'scrooloose/syntastic'
-Bundle 'chriskempson/base16-vim'
 Bundle 'bling/vim-airline'
 Bundle 'tpope/vim-git'
 Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-vinegar'
+Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
 Bundle 'mhinz/vim-signify'
 Bundle 'mhinz/vim-hugefile'
-Bundle 'mhinz/vim-startify'
+Bundle 'myusuf3/numbers.vim'
+Bundle 'Lokaltog/vim-easymotion'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                          Syntax configuration                           "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Bundle 'pangloss/vim-javascript'
 Bundle 'leshill/vim-json'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'digitaltoad/vim-jade'
+Bundle 'wavded/vim-stylus'
 Bundle 'slim-template/vim-slim.git'
+Bundle 'groenewege/vim-less'
+Bundle 'ap/vim-css-color'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                           reset vimrc augroup                           "
@@ -72,7 +86,6 @@ set guioptions-=m
 set guioptions-=M
 set antialias
 set noshowmode          " don't show the mode ("-- INSERT --") at the bottom
-set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline:h12
 set modelines=0
 set number                                   " show line numbers
 set history=1000                             " limit :cmdline history
@@ -83,6 +96,8 @@ set noerrorbells                             " no noise.
 set laststatus=2                             " always show status line.
 set tabstop=2                                " number of spaces of tab character
 set shiftwidth=2                             " number of spaces to (auto)indent
+set shortmess+=I                             " disable welcome screen 
+au GUIEnter * set fullscreen                 " go full screen like you mean it
 set smarttab
 set smartindent
 set expandtab                                " convert tabs to spaces
@@ -108,20 +123,18 @@ set nowritebackup
 set noswapfile
 set wildmode=full                            "complete first full match
 set wildignore=*.dll,*.exe,*.pyc,*.pyo,*.egg,*.class
-set wildignore+=*.jpg,*.gif,*.png,*.o,*.obj,*.bak,*.rbc
+set wildignore+=*.o,*.obj,*.bak,*.rbc
 set wildignore+=Icon*,\.DS_Store,*.out,*.scssc,*.sassc
 set wildignore+=.git/*,.hg/*,.svn/*,*/swp/*,*/undo/*,Gemfile.lock
 set wildmenu                                 "show completion matches above command line
 set encoding=utf-8
-set list
-set lcs=trail:༎,eol:ᚋ,nbsp:፨,tab:⇥\          "show “invisible” characters
-set helpheight=200                           " help windows take up near full window size
+scriptencoding utf-8
 
-colorscheme base16-atelierforest
-
-" override default colors for the LCS characters
-hi NonText ctermfg=4 guifg=#333333 guibg=#102020
-hi SpecialKey ctermfg=4 guifg=#333333 guibg=#102020
+" Don't move around in insert mode
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
 
 " The alt (option) key on macs now behaves like the 'meta' key. This means we
 " can now use <m-x> or similar as maps. This is buffer local, and it can easily
@@ -130,6 +143,14 @@ hi SpecialKey ctermfg=4 guifg=#333333 guibg=#102020
 if has("gui_macvim")
   set macmeta
 endif
+
+
+if has('gui_running')
+  set guifont=Inconsolata-dz\ For\ Powerline:h13
+  colorscheme base16-ocean " or Tomorrow-Night-Blue
+endif
+
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            auto commands                                "
@@ -147,6 +168,9 @@ au WinEnter * set cursorline cursorcolumn
 
 au vimrc BufEnter *.snippets setf snippets
 au vimrc FileType snippets set noexpandtab
+
+" remove extra line spaces
+autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -196,7 +220,7 @@ nnoremap <silent> g* g*zz
 nnoremap <silent> g# g#zz
 
 " buffer
-map <leader><leader> <c-W><c-W>
+map <leader>/ <c-W><c-W>
 nmap <leader>sa  :leftabove  vnew<CR>
 nmap <leader>sd  :rightbelow vnew<CR>
 nmap <leader>sw  :leftabove  new<CR>
@@ -205,18 +229,25 @@ nmap <leader>ss  :rightbelow new<CR>
 " disabled keys
 map K <nop>
 
-" remove extra line spaces
-nnoremap <silent> <leader><leader>c :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>:retab<CR>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              NerdTree                                   "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  Toggle NERDTree
+nmap <leader>d :NERDTreeToggle<CR>
+"  Quit NERDTree when opening a file
+let NERDTreeQuitOnOpen=1
+"  Quit Vim if NERDTree is last buffer
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 Ack                                     "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>a :Ack
+nnoremap <leader>f :Ack
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              Ctrl P                                     "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ctrlp_map = '<leader>f'
+let g:ctrlp_map = '<leader>p'
 let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:15,results:15'
 let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 let g:ctrlp_switch_buffer = '0'
@@ -240,7 +271,6 @@ let g:syntastic_mode_map={ 'mode': 'active',
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                             Airline                                     "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -254,36 +284,3 @@ let g:signify_sign_overwrite     = 1
 highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=159
 highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                             Startify "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:startify_custom_header = [
-            \ '                                                 ',
-            \ '            _________________________            ',
-            \ '            |                       |            ',
-            \ '             |____     _____     ____|           ',
-            \ '      ********* |    |    |    | *********       ',
-            \ '   *************|    |    |  ****************    ',
-            \ ' *****        **|    |    ********        *****  ',
-            \ '****            |    |******** |            **** ',
-            \ '****            |    ******    |            **** ',
-            \ '****            | ********|    |            **** ',
-            \ ' *****        ********    |    |**        *****  ',
-            \ '   ***************   |    |    |*************    ',
-            \ '      *********_|    |____|    |_*********       ',
-            \ '           |          |             |            ',
-            \ '           |________________________|            ',
-            \ '                                                 ',
-            \ '                                                 ',
-            \ '                                                 ',
-            \ ]
-
-let g:ctrlp_reuse_window = 'startify'
-let g:startify_skiplist = [
-       \ 'COMMIT_EDITMSG',
-       \ $VIMRUNTIME .'/doc',
-       \ 'bundle/.*/doc',
-       \ '\.DS_Store'
-       \ ]
-
